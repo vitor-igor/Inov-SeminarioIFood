@@ -6,7 +6,7 @@
 <title>iFood: Plataforma e transformação do delivery</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Instrument+Sans:wght@400;600;700&display=swap">
 <style>
-/* Forçado Tema Claro para garantida visualização em Projetores */
+
 :root {
   --bg: #F4F6F8;
   --ink: #111827;
@@ -52,7 +52,6 @@ main { flex: 1; position: relative; overflow: hidden; }
 .lead { font-size: 1.25em; margin: 0 0 1.2em; color: var(--mut); font-weight: 400; }
 .src { font-size: 15px; color: var(--mut); margin-top: 1.5em; border-top: 1px solid var(--line); padding-top: 12px; font-style: italic; }
 
-/* Grids e Componentes de Layout */
 .g { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 24px; }
 .g-2row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
 .g-2row .full { grid-column: 1 / -1; }
@@ -61,20 +60,17 @@ main { flex: 1; position: relative; overflow: hidden; }
 .c p { margin: .4em 0 0; font-size: 17px; color: #374151; }
 .c b { font-family: 'Bricolage Grotesque', sans-serif; font-size: 32px; color: var(--ink); display: block; line-height: 1.1; margin-bottom: 8px; }
 
-/* Timeline Visual */
-.timeline { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; border-left: 4px solid var(--red); padding-left: 20px; }
-.timeline-item { background: var(--card); padding: 18px 24px; border-radius: 10px; border: 1px solid var(--line); }
-.timeline-item h4 { margin: 0 0 4px 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; color: var(--red); }
-.timeline-item p { margin: 0; font-size: 16.5px; color: #374151; }
+.timeline { display: flex; flex-direction: column; gap: 14px; margin: 24px 0; border-left: 4px solid var(--red); padding-left: 20px; }
+.timeline-item { background: var(--card); padding: 14px 20px; border-radius: 10px; border: 1px solid var(--line); }
+.timeline-item h4 { margin: 0 0 2px 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 19px; color: var(--red); }
+.timeline-item p { margin: 0; font-size: 16px; color: #374151; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* Tabelas Personalizadas */
 .custom-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
 .custom-table th { background: var(--ink); color: #fff; text-align: left; padding: 14px 18px; font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; }
 .custom-table td { padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 16.5px; color: #374151; }
 .custom-table tr:last-child td { border-bottom: none; }
 .custom-table tr:nth-child(even) { background: #FAFAFA; }
 
-/* Highlight Card de Inovação na Simulação */
 .c.inov-card { background: var(--red-light); border: 2px solid var(--red); }
 .c.inov-card h3 { color: var(--red); font-size: 24px; }
 .c.inov-card p { font-size: 18px; font-weight: 600; color: #111827; }
@@ -89,13 +85,12 @@ main { flex: 1; position: relative; overflow: hidden; }
 
 .highlight-box { border-left: 6px solid var(--red); padding: 20px 24px; margin: 24px 0; background: var(--red-light); border-radius: 0 12px 12px 0; font-size: 19px; }
 
-/* Estilo para Referências ABNT */
 .abnt-list { list-style: none; padding: 0; margin: 20px 0; }
 .abnt-list li { margin-bottom: 16px; font-size: 16px; color: #374151; padding-left: 24px; text-indent: -24px; }
 
 footer { display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; border-top: 2px solid var(--line); font-size: 16px; font-weight: 600; color: var(--mut); background: var(--card); }
 
-@media(max-width: 800px) { .g-2row { grid-template-columns: 1fr; } .trk button { font-size: 11px; } }
+@media(max-width: 900px) { .g-2row { grid-template-columns: 1fr; } .trk button { font-size: 11px; } .timeline-item p { white-space: normal; } }
 </style>
 </head>
 <body>
@@ -107,7 +102,7 @@ footer { display: flex; justify-content: space-between; align-items: center; pad
 
 <main id="m">
 
-<!-- Slide 0: Capa Mantida Exatamente conforme sua edição -->
+<!-- Slide 0: Capa -->
 <section class="s" id="s0">
   <div class="w" style="display: grid; grid-template-columns: minmax(280px, 1fr) 2fr; gap: 40px; align-items: center; min-height: 60vh;">
     <div style="text-align: center;">
@@ -147,7 +142,7 @@ footer { display: flex; justify-content: space-between; align-items: center; pad
     </div>
     <div class="c">
       <h3>Dores dos Restaurantes</h3>
-      <p>Processo manual de anotação sujeito a erros, alcance restrito ao bairro físico e altíssimo custo fixo para manter entregadores dedicados ociosos fora do horário de pico.</p>
+      <p>Processo manual de anotação sujeito a erros, alcance restrito ao(s) bairro(s) próximo(s) e altíssimo custo fixo para manter entregadores dedicados ociosos fora do horário de pico.</p>
     </div>
     <div class="c">
       <h3>O Gatilho Tecnológico</h3>
@@ -159,61 +154,64 @@ footer { display: flex; justify-content: space-between; align-items: center; pad
 <!-- Slide 2: Surgimento da Ideia & Linha do Tempo -->
 <section class="s" id="s2"><div class="w">
   <p class="k">2. Origem e Evolução</p>
-  <h2>Surgimento da Ideia e Trajetória</h2>
-  <p class="lead">A transformação do iFood de um guia impresso regional para uma gigante de tecnologia.</p>
+  <h2>Surgimento da Ideia e Trajetória Cronológica</h2>
+  <p class="lead">A transição do modelo analógico de tele-entrega para uma das maiores plataformas de tecnologia da América Latina.</p>
   
   <div class="timeline">
     <div class="timeline-item">
-      <h4>2007 — As Origens (Disk Cook)</h4>
-      <p>Nascimento como um guia impresso de cardápios e central telefônica unificada para pedidos de restaurantes de alta gastronomia em São Paulo.</p>
+      <h4>1997 — O Início Analógico (Disk Cook)</h4>
+      <p>Guia impresso de cardápios com atendimento telefônico unificado para tele-entrega de alta gastronomia em São Paulo.</p>
     </div>
     <div class="timeline-item">
-      <h4>2011 — Fundação do iFood & Transição Web</h4>
-      <p>Fundação oficial da marca iFood por Eduardo Baer, Patrick Sigrist e sócios, unindo forças com o site Restaurante Web para criar o primeiro portal online de pedidos do Brasil.</p>
+      <h4>2011 — Fundação da Marca iFood (Portal Web)</h4>
+      <p>Lançamento do portal digital unificado integrando cardápios online para substituição dos panfletos de papel.</p>
     </div>
     <div class="timeline-item">
-      <h4>2014 — Entrada da Movile & Fusões Estratégicas</h4>
-      <p>Acelerada pelo aporte do grupo de tecnologia Movile, a empresa realiza fusões com o Just Eat no Brasil e adquire concorrentes regionais para garantir escala nacional.</p>
+      <h4>2012 — 1º MVP Mobile (Aplicativo iOS & Android)</h4>
+      <p>Pivô estratégico para o modelo mobile-first com geolocalização via GPS e pedidos diretamente pelo smartphone.</p>
     </div>
     <div class="timeline-item">
-      <h4>2018 até Hoje — Logística Própria, IA & Ecosystem Expansion</h4>
-      <p>Lançamento da infraestrutura de "Entrega iFood" (oferecendo logística para lojas sem entregadores), evolução para modelos de IA preditiva, expansão para supermercados, farmácias e soluções financeiras (iFood Pago).</p>
+      <h4>2014 — Aporte da Movile & Fusão com Just Eat</h4>
+      <p>Capitalização acelerada pelo grupo Movile e fusão com a operação brasileira do Just Eat para ganhar escala nacional.</p>
+    </div>
+    <div class="timeline-item">
+      <h4>2018 — Inovação de Serviço ("Entrega iFood")</h4>
+      <p>Criação da malha logística própria sob demanda, permitindo que estabelecimentos sem motoboys fizessem delivery.</p>
+    </div>
+    <div class="timeline-item">
+      <h4>2021 até Hoje — Hiperescala</h4>
+      <p>100 milhões de pedidos/mês e ecossistema com IA e fintech.</p>
     </div>
   </div>
 </div></section>
 
-<!-- Slide 3: Tipologia da Inovação & Plataforma Multilateral -->
+<!-- Slide 3: Tipologia da Inovação & SVG da Plataforma Multilateral -->
 <section class="s" id="s3"><div class="w">
   <p class="k">3. Categorização da Inovação</p>
   <h2>A Plataforma Multilateral de Três Lados</h2>
   <p class="lead">O iFood não inventou a entrega de comida. A inovação central foi a transição de um canal linear para uma <b>plataforma multilateral autossustentável</b>.</p>
 
   <div style="background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px; margin-bottom: 24px; text-align: center;">
-    <svg viewBox="0 0 800 260" style="width: 100%; max-width: 750px; height: auto;">
-      <!-- Conexões -->
-      <line x1="150" y1="180" x2="400" y2="70" stroke="#EA1D2C" stroke-width="3" stroke-dasharray="6,6"/>
-      <line x1="650" y1="180" x2="400" y2="70" stroke="#EA1D2C" stroke-width="3" stroke-dasharray="6,6"/>
-      <line x1="150" y1="180" x2="650" y2="180" stroke="#EA1D2C" stroke-width="3" stroke-dasharray="6,6"/>
+    <svg viewBox="0 0 900 345" style="width: 100%; max-width: 850px; height: auto;">
+      <line x1="180" y1="230" x2="450" y2="80" stroke="#EA1D2C" stroke-width="4" stroke-dasharray="6,6"/>
+      <line x1="720" y1="230" x2="450" y2="80" stroke="#EA1D2C" stroke-width="4" stroke-dasharray="6,6"/>
+      <line x1="180" y1="230" x2="720" y2="230" stroke="#EA1D2C" stroke-width="4" stroke-dasharray="6,6"/>
       
-      <!-- Nó Central -->
-      <circle cx="400" cy="70" r="55" fill="#EA1D2C" />
-      <text x="400" y="65" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="18" text-anchor="middle">CORE iFOOD</text>
-      <text x="400" y="85" fill="#FFC83D" font-family="'Instrument Sans', sans-serif" font-weight="bold" font-size="13" text-anchor="middle">Algoritmos & IA</text>
+      <circle cx="450" cy="80" r="78" fill="#EA1D2C" />
+      <text x="450" y="72" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="20" text-anchor="middle">CORE iFOOD</text>
+      <text x="450" y="96" fill="#FFC83D" font-family="'Instrument Sans', sans-serif" font-weight="bold" font-size="14" text-anchor="middle">Algoritmos &amp; IA</text>
 
-      <!-- Nó Clientes -->
-      <circle cx="150" cy="180" r="48" fill="#111827" />
-      <text x="150" y="175" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="16" text-anchor="middle">CLIENTES</text>
-      <text x="150" y="195" fill="#D1D5DB" font-family="'Instrument Sans', sans-serif" font-size="12" text-anchor="middle">Demanda & Consumo</text>
+      <circle cx="180" cy="230" r="75" fill="#111827" />
+      <text x="180" y="222" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="18" text-anchor="middle">CLIENTES</text>
+      <text x="180" y="244" fill="#FFC83D" font-family="'Instrument Sans', sans-serif" font-weight="600" font-size="13" text-anchor="middle">Demanda &amp; Consumo</text>
 
-      <!-- Nó Entregadores -->
-      <circle cx="400" cy="220" r="40" fill="#FFC83D" />
-      <text x="400" y="215" fill="#111827" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="14" text-anchor="middle">ENTREGADORES</text>
-      <text x="400" y="232" fill="#111827" font-family="'Instrument Sans', sans-serif" font-size="11" text-anchor="middle">Capacidade Logística</text>
+      <circle cx="450" cy="275" r="68" fill="#FFC83D" />
+      <text x="450" y="268" fill="#111827" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="16" text-anchor="middle">ENTREGADORES</text>
+      <text x="450" y="288" fill="#111827" font-family="'Instrument Sans', sans-serif" font-weight="600" font-size="12" text-anchor="middle">Capacidade Logística</text>
 
-      <!-- Nó Restaurantes -->
-      <circle cx="650" cy="180" r="48" fill="#111827" />
-      <text x="650" y="175" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="16" text-anchor="middle">RESTAURANTES</text>
-      <text x="650" y="195" fill="#D1D5DB" font-family="'Instrument Sans', sans-serif" font-size="12" text-anchor="middle">Oferta & Produção</text>
+      <circle cx="720" cy="230" r="75" fill="#111827" />
+      <text x="720" y="222" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="18" text-anchor="middle">RESTAURANTES</text>
+      <text x="720" y="244" fill="#FFC83D" font-family="'Instrument Sans', sans-serif" font-weight="600" font-size="13" text-anchor="middle">Oferta &amp; Produção</text>
     </svg>
   </div>
 
@@ -299,7 +297,7 @@ footer { display: flex; justify-content: space-between; align-items: center; pad
   </div>
 </div></section>
 
-<div id="ST"></div> <!-- Os 5 slides de simulação (s6 a s10) injetados via JS -->
+<div id="ST"></div> <!-- Os 5 slides de simulação de pedido -->
 
 <!-- Slide 11: Desenvolvimento e Validação -->
 <section class="s" id="s11"><div class="w">
@@ -327,21 +325,67 @@ footer { display: flex; justify-content: space-between; align-items: center; pad
 <section class="s" id="s12"><div class="w">
   <p class="k">7. Arquitetura Tecnológica</p>
   <h2>Tecnologia e Engenharia de Software</h2>
-  <p class="lead">A infraestrutura técnica evoluiu de uma aplicação monolítica para uma arquitetura distribuída resiliente de altíssima escala.</p>
-  
-  <div class="g">
-    <div class="c">
-      <h3>Microsserviços em Rust</h3>
-      <p>Adoção da linguagem <b>Rust</b> nos motores críticos de roteamento logístico para garantir execução com latência sub-milissegundo e baixo consumo de memória.</p>
+
+  <div style="display: grid; grid-template-columns: minmax(320px, 380px) 1fr; gap: 28px; align-items: center; margin-bottom: 24px;">
+
+    <div style="background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+      <h3 style="font-size: 18px; color: var(--ink); margin-bottom: 14px;">Pipeline de Arquitetura</h3>
+      <svg viewBox="0 0 280 500" style="width: 100%; height: auto;">
+        <!-- Bloco 1: Interfaces -->
+        <rect x="20" y="10" width="240" height="90" rx="10" fill="#F4F6F8" stroke="#111827" stroke-width="2"/>
+        <text x="140" y="38" fill="#EA1D2C" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="15" text-anchor="middle">1. INTERFACES (APPs)</text>
+        <text x="140" y="62" fill="#374151" font-family="'Instrument Sans', sans-serif" font-size="13" text-anchor="middle">Apps iOS/Android + PDV Parceiros</text>
+        <text x="140" y="80" fill="#374151" font-family="'Instrument Sans', sans-serif" font-size="13" text-anchor="middle">App do Entregador (GPS)</text>
+
+        <!-- Seta 1 -->
+        <path d="M 140 100 L 140 130" stroke="#EA1D2C" stroke-width="3" fill="none"/>
+        <polygon points="140,136 134,126 146,126" fill="#EA1D2C"/>
+
+        <!-- Bloco 2: Gateway & Antifraude -->
+        <rect x="20" y="138" width="240" height="90" rx="10" fill="#FFF0F1" stroke="#EA1D2C" stroke-width="2"/>
+        <text x="140" y="166" fill="#EA1D2C" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="15" text-anchor="middle">2. GATEWAY &amp; SEGURANÇA</text>
+        <text x="140" y="190" fill="#374151" font-family="'Instrument Sans', sans-serif" font-size="13" text-anchor="middle">AWS CloudFront + WAF API</text>
+        <text x="140" y="208" fill="#374151" font-family="'Instrument Sans', sans-serif" font-size="13" text-anchor="middle">Motor Antifraude &amp; iFood Pago</text>
+
+        <!-- Seta 2 -->
+        <path d="M 140 228 L 140 258" stroke="#EA1D2C" stroke-width="3" fill="none"/>
+        <polygon points="140,264 134,254 146,254" fill="#EA1D2C"/>
+
+        <!-- Bloco 3: Core Backend (Rust) -->
+        <rect x="20" y="266" width="240" height="90" rx="10" fill="#111827" stroke="#111827" stroke-width="2"/>
+        <text x="140" y="294" fill="#FFC83D" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="15" text-anchor="middle">3. CORE BACKEND (RUST)</text>
+        <text x="140" y="318" fill="#FFFFFF" font-family="'Instrument Sans', sans-serif" font-size="13" text-anchor="middle">Engine Logístico Sub-ms</text>
+        <text x="140" y="336" fill="#FFFFFF" font-family="'Instrument Sans', sans-serif" font-size="13" text-anchor="middle">Roteamento em Grafos</text>
+
+        <!-- Seta 3 -->
+        <path d="M 140 356 L 140 386" stroke="#EA1D2C" stroke-width="3" fill="none"/>
+        <polygon points="140,392 134,382 146,382" fill="#EA1D2C"/>
+
+        <!-- Bloco 4: IA & Dados AWS -->
+        <rect x="20" y="394" width="240" height="90" rx="10" fill="#F4F6F8" stroke="#111827" stroke-width="2"/>
+        <text x="140" y="422" fill="#EA1D2C" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="15" text-anchor="middle">4. IA &amp; DADOS AWS</text>
+        <text x="140" y="446" fill="#374151" font-family="'Instrument Sans', sans-serif" font-size="13" text-anchor="middle">Machine Learning Real-time</text>
+        <text x="140" y="464" fill="#374151" font-family="'Instrument Sans', sans-serif" font-size="13" text-anchor="middle">10Bi+ Predições Diárias</text>
+      </svg>
     </div>
-    <div class="c">
-      <h3>Infraestrutura AWS em Nuvem</h3>
-      <p>Uso de nuvem elástica escalável capaz de suportar variações bruscas de tráfego entre os horários de vale e os picos de almoço e jantar.</p>
+
+    <div style="display: flex; flex-direction: column; gap: 18px;">
+      <p class="lead">A infraestrutura técnica evoluiu de uma aplicação monolítica para uma arquitetura distribuída na nuvem.</p>
+
+      <div class="c" style="width: 100%; box-sizing: border-box;">
+        <h3>Microsserviços em Rust</h3>
+        <p>Adoção da linguagem <strong>Rust</strong> no núcleo do motor de roteamento para garantir execução de despacho com latência sub-milissegundo e baixo consumo de memória.</p>
+      </div>
+      <div class="c" style="width: 100%; box-sizing: border-box;">
+        <h3>Infraestrutura Nuvem na AWS</h3>
+        <p>Arquitetura elástica em nuvem capaz de absorver picos massivos de tráfego nos horários de pico (almoço/jantar) com autoscaling contínuo.</p>
+      </div>
+      <div class="c" style="width: 100%; box-sizing: border-box;">
+        <h3>Inteligência Artificial Preditiva</h3>
+        <p>Algoritmos de IA calculando o tempo exato de preparo (ETA) do prato no restaurante para orquestrar a chegada do entregador no instante exato do término.</p>
+      </div>
     </div>
-    <div class="c">
-      <h3>Modelos Preditivos de IA</h3>
-      <p>Algoritmos de aprendizado de máquina atuando em tempo real no combate a fraudes de cartão, cálculo do tempo de preparo de pratos e agrupamento de entregas.</p>
-    </div>
+
   </div>
 </div></section>
 
@@ -378,43 +422,63 @@ footer { display: flex; justify-content: space-between; align-items: center; pad
 <section class="s" id="s14"><div class="w">
   <p class="k">9. Ecossistema & Propriedade</p>
   <h2>Propriedade Intelectual e Inovação Aberta</h2>
-  <p class="lead">Como a empresa utiliza a estratégia de ecossistemas e parcerias externas para acelerar seu desenvolvimento tecnológico.</p>
+  <p class="lead">Como a empresa combina ativos proprietários protegidos com estratégias colaborativas no ecossistema de tecnologia.</p>
   
-  <div class="g">
-    <div class="c">
-      <h3>Modelo de Inovação Aberta (Open Innovation)</h3>
-      <p>Desenvolvimento do <strong>iFood Labs</strong> e parcerias contínuas com ecossistemas de startups, aceleradoras e centros universitários de pesquisa (USP, FGV, Insper) para testar novas soluções em robótica, drones e logística verde.</p>
+  <div class="g-2row" style="margin-bottom: 24px;">
+    <div class="c" style="background: #FFFFFF; border-top: 6px solid var(--red);">
+      <h3 style="color: var(--red); font-size: 24px;">Propriedade Intelectual Privada</h3>
+      <p style="font-size: 16px; color: var(--mut); margin-bottom: 12px;">Ativos intangíveis fechados e proteção de marca/tecnologia:</p>
+      <ul style="margin: 0; padding-left: 20px; font-size: 16.5px; color: #374151;">
+        <li style="margin-bottom: 10px;"><strong>Marcas Registradas (INPI):</strong> Registros oficiais das marcas <i>iFood</i>, <i>iFood Pago</i>, <i>iFood Card</i> e <i>Loop</i>.</li>
+        <li style="margin-bottom: 10px;"><strong>Segredo Industrial &amp; Algoritmos:</strong> Código-fonte proprietário do motor de roteamento em Rust (<i>Logistic Engine</i>), IA de precificação dinâmica e modelos antifraude.</li>
+        <li style="margin-bottom: 10px;"><strong>Bancos de Dados Preditivos:</strong> Ativo estratégico de mais de 10 bilhões de predições de consumo e perfis comportamentais mapeados.</li>
+      </ul>
     </div>
-    <div class="c">
-      <h3>Estratégia de M&A (Aquisições)</h3>
-      <p>Aceleração da capacidade interna por meio da compra estratégica de startups de tecnologia e logística (como SpoonRocket e H2O), integrando rapidamente seus talentos e código ao ecossistema.</p>
-    </div>
-    <div class="c">
-      <h3>APIs Abertas & Propriedade Intelectual</h3>
-      <p>Proteção rigorosa de marcas e algoritmos proprietários de recomendação, somada à disponibilização de APIs abertas para integração com softwares de gestão (PDV) dos restaurantes.</p>
+
+    <div class="c" style="background: #FFFFFF; border-top: 6px solid #FFC83D;">
+      <h3 style="color: #D97706; font-size: 24px;">Modelo de Inovação Aberta</h3>
+      <p style="font-size: 16px; color: var(--mut); margin-bottom: 12px;">Colaboração estratégica com o ecossistema externo:</p>
+      <ul style="margin: 0; padding-left: 20px; font-size: 16.5px; color: #374151;">
+        <li style="margin-bottom: 10px;"><strong>iFood Open Innovation &amp; Labs:</strong> Parcerias com startups para testes de entregas por drones (<i>iFood Drone</i>) e robôs autônomos (<i>Ada</i>).</li>
+        <li style="margin-bottom: 10px;"><strong>P&amp;D Acadêmico:</strong> Convênios de pesquisa em inteligência artificial e sustentabilidade logística com USP, UNICAMP, FGV e Insper.</li>
+        <li style="margin-bottom: 10px;"><strong>APIs Abertas de Ecossistema:</strong> Conectores abertos de integração com sistemas de PDV de restaurantes e plataformas de ERP parceiras.</li>
+      </ul>
     </div>
   </div>
 </div></section>
 
-<!-- Slide 15: Visão Crítica e Desafios Regulatórios -->
+<!-- Slide 15: Análise Crítica -->
 <section class="s" id="s15"><div class="w">
   <p class="k">10. Análise Crítica</p>
   <h2>Pontos Frágeis, Trabalho e Regulação do CADE</h2>
-  <p class="lead">A consolidação do monopólio de fato trouxe externalidades sociais e desafios regulatórios profundos.</p>
+  <p class="lead">A consolidação do monopólio gerou discussões éticas, trabalhistas e antitruste na academia, na imprensa e nos tribunais.</p>
   
-  <div class="g">
-    <div class="c">
-      <h3>Precarização e "Uberização"</h3>
-      <p>A transferência do risco operacional para os entregadores autônomos gerou fortes debates éticos e jurídicos sobre a falta de seguridade social, jornadas exaustivas e remuneração da categoria.</p>
+  <div style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 24px;">
+    
+    <div class="c" style="border-left: 6px solid var(--red);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <h3 style="color: var(--ink); font-size: 22px; margin-bottom: 6px;">Precarização, "Uberização" e Direitos dos Entregadores</h3>
+        <span style="font-size: 14px; color: var(--mut); font-weight: 600;">Externalidade Social</span>
+      </div>
+      <p>A transferência de custos e riscos operacionais para entregadores autônomos gerou paralisações ("Breques dos Apps"), intensos debates jurídicos sobre vínculo empregatício e discussões nacionais sobre regulação da seguridade social para trabalhadores de plataforma.</p>
     </div>
-    <div class="c">
-      <h3>Intervenção Antitruste do CADE</h3>
-      <p>Em 2023, o CADE interveio proibindo os acordos de exclusividade celebrados pelo iFood com grandes redes de restaurantes, visando reabrir o mercado para a concorrência.</p>
+
+    <div class="c" style="border-left: 6px solid #FFC83D;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <h3 style="color: var(--ink); font-size: 22px; margin-bottom: 6px;">Intervenção do CADE e Fim dos Contratos de Exclusividade Total</h3>
+        <span style="font-size: 14px; color: var(--mut); font-weight: 600;">Defesa da Concorrência</span>
+      </div>
+      <p>O Conselho Administrativo de Defesa Econômica (CADE) assinou Termo de Compromisso proibindo o iFood de fechar contratos de exclusividade total com grandes redes de restaurantes (ex: McDonald's), impedindo o fechamento do mercado para concorrentes como Rappi.</p>
     </div>
-    <div class="c">
-      <h3>Dependência dos Pequenos Negócios</h3>
-      <p>Altas comissões cobradas (que podem chegar a 27%) pressionam as margens dos pequenos restaurantes, que se tornam reféns da visibilidade concedida pelos algoritmos da plataforma.</p>
+
+    <div class="c" style="border-left: 6px solid #4B5563;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <h3 style="color: var(--ink); font-size: 22px; margin-bottom: 6px;">Margens Apertadas e Dependência dos Pequenos Restaurantes</h3>
+        <span style="font-size: 14px; color: var(--mut); font-weight: 600;">Relação Comercial</span>
+      </div>
+      <p>Pequenos estabelecimentos enfrentam comissões operacionais elevadas (que podem variar de 12% a 27%), criando uma forte dependência algorítmica: sem pagar por visibilidade ou aderir às campanhas de cupons, tornam-se invisíveis na concorrência local.</p>
     </div>
+
   </div>
 </div></section>
 
@@ -422,26 +486,36 @@ footer { display: flex; justify-content: space-between; align-items: center; pad
 <section class="s" id="s16"><div class="w">
   <p class="k">11. Lições Práticas</p>
   <h2>Aprendizados para Engenharia de Software</h2>
-  <div class="g">
-    <div class="c">
-      <h3>Core Business Não se Terceiriza</h3>
-      <p>O iFood enfrentou severas limitações no início ao terceirizar sua equipe de desenvolvimento. Assumir o controle interno da engenharia foi o divisor de águas para permitir a escala do produto.</p>
+  <p class="lead">Principais conclusões técnicas e estratégicas extraídas do estudo de caso:</p>
+
+  <div class="g" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 24px;">
+    
+    <div class="c" style="background: #111827; color: #FFFFFF; border: none; border-radius: 16px; position: relative; overflow: hidden; padding: 28px;">
+      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 64px; font-weight: 800; color: rgba(255,255,255,0.12); position: absolute; top: 5px; right: 20px;">01</span>
+      <h3 style="color: #FFC83D; font-size: 22px; margin-bottom: 12px;">Core Business não se terceiriza</h3>
+      <p style="color: #E5E7EB; font-size: 16.5px; margin: 0;">A decisão estratégica de internalizar a engenharia de software foi o divisor de águas. Terceirizar a tecnologia central paralisa a capacidade de evolução rápida do produto.</p>
     </div>
-    <div class="c">
-      <h3>Decisões Guiadas pelo Negócio</h3>
-      <p>Ferramentas avançadas (como a linguagem Rust ou modelos preditivos) só devem ser adotadas quando resolvem gargalos operacionais e financeiros claros (latência e custo de servidores).</p>
+
+    <div class="c" style="background: var(--red); color: #FFFFFF; border: none; border-radius: 16px; position: relative; overflow: hidden; padding: 28px;">
+      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 64px; font-weight: 800; color: rgba(255,255,255,0.2); position: absolute; top: 5px; right: 20px;">02</span>
+      <h3 style="color: #FFFFFF; font-size: 22px; margin-bottom: 12px;">Arquitetura guiada <br>pelo negócio</h3>
+      <p style="color: #FFF0F1; font-size: 16.5px; margin: 0;">Adoções avançadas como a linguagem Rust e modelos preditivos de IA não foram modismos, mas respostas diretas a restrições reais de latência sub-milissegundo e redução de custos.</p>
     </div>
-    <div class="c">
-      <h3>Arquitetura Evolutiva & Resiliência</h3>
-      <p>Sistemas de altíssimo tráfego exigem desacoplamento por microsserviços e tolerância a falhas para garantir disponibilidade contínua mesmo sob picos extremos inesperados.</p>
+
+    <div class="c" style="background: #FFFFFF; border: 2px solid #111827; border-radius: 16px; position: relative; overflow: hidden; padding: 28px;">
+      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 64px; font-weight: 800; color: rgba(17,24,39,0.08); position: absolute; top: 5px; right: 20px;">03</span>
+      <h3 style="color: var(--ink); font-size: 22px; margin-bottom: 12px;">Evolução pautada <br>por telemetria</h3>
+      <p style="color: #374151; font-size: 16.5px; margin: 0;">Nenhuma funcionalidade sobrevive apenas com intuição. Testes A/B massivos em produção e métricas rigorosas de telemetria guiam cada decisão de código e interface.</p>
     </div>
+
   </div>
-  <div class="highlight-box">
+
+  <div class="highlight-box" style="margin-top: 10px;">
     <b>Conclusão Acadêmica:</b> O caso iFood demonstra que a inovação em Engenharia de Software vai além de algoritmos isolados — trata-se de construir uma arquitetura sociotécnica escalável capaz de sustentar um ecossistema econômico em tempo real.
   </div>
 </div></section>
 
-<!-- Slide 17: Referências Bibliográficas em Padrão ABNT -->
+<!-- Slide 17: Referências Bibliográficas -->
 <section class="s" id="s17"><div class="w">
   <p class="k">12. Fontes e Bibliografia</p>
   <h2>Referências Bibliográficas</h2>
@@ -465,7 +539,6 @@ footer { display: flex; justify-content: space-between; align-items: center; pad
 </footer>
 
 <script>
-// Dados da Jornada do Pedido para os Slides de Simulação (Slides 6 a 10)
 var ST = [
   ["1. Descoberta & Vitrine Personalizada", 
    "O usuário abre o aplicativo no celular para escolher sua refeição.", 
@@ -503,7 +576,6 @@ var ST = [
    ["Validação PIN", "Feedback Loop", "Efeito de Rede Multi-Lado"], "Relatório de Sustentabilidade 2023/25"]
 ];
 
-// Injeção Dinâmica dos Slides de Simulação no layout de 2 Linhas
 document.getElementById('ST').outerHTML = ST.map(function(a, i) {
     return '<section class="s" id="s' + (i+6) + '"><div class="w">' +
            '<p class="k">Jornada do Pedido — Passo ' + (i+1) + ' de 5</p>' +
@@ -524,7 +596,6 @@ var S = [].slice.call(document.querySelectorAll('.s')),
     B = document.getElementById('bike'),
     cur = 0;
 
-// Construção dos botões do Tracker no topo
 ST.forEach(function(a, i) {
     var b = document.createElement('button');
     b.innerHTML = '<i></i>Passo ' + (i+1);
@@ -533,27 +604,23 @@ ST.forEach(function(a, i) {
 });
 var tb = [].slice.call(T.querySelectorAll('button'));
 
-// Posicionamento preciso da motoca sobre o passo ativo
 function updateBikePosition(stepIndex) {
+    var trackerRect = T.getBoundingClientRect();
     if(stepIndex >= 0 && stepIndex < tb.length) {
         var btn = tb[stepIndex];
-        var trackerRect = T.getBoundingClientRect();
         var btnRect = btn.getBoundingClientRect();
         var centerPos = (btnRect.left + btnRect.width / 2) - trackerRect.left;
         B.style.left = centerPos + 'px';
-        B.style.opacity = '1';
+    } else if(cur < 6) {
+        var btn0 = tb[0];
+        var btnRect0 = btn0.getBoundingClientRect();
+        var startPos = (btnRect0.left - trackerRect.left) - 30;
+        B.style.left = Math.max(0, startPos) + 'px';
     } else {
-        if(cur < 6) {
-            var btn0 = tb[0];
-            var trackerRect0 = T.getBoundingClientRect();
-            var btnRect0 = btn0.getBoundingClientRect();
-            B.style.left = ((btnRect0.left + btnRect0.width / 2) - trackerRect0.left) + 'px';
-        } else {
-            var btnLast = tb[tb.length - 1];
-            var trackerRectL = T.getBoundingClientRect();
-            var btnRectL = btnLast.getBoundingClientRect();
-            B.style.left = ((btnRectL.left + btnRectL.width / 2) - trackerRectL.left) + 'px';
-        }
+        var btnLast = tb[tb.length - 1];
+        var btnRectL = btnLast.getBoundingClientRect();
+        var endPos = (btnRectL.right - trackerRect.left) + 30;
+        B.style.left = Math.min(trackerRect.width, endPos) + 'px';
     }
 }
 
@@ -564,7 +631,6 @@ function show(n) {
     });
     S[cur].scrollTop = 0;
     
-    // Os passos de simulação ficam nos slides com índices 6 a 10
     var st = (cur >= 6 && cur <= 10) ? cur - 6 : -1;
     tb.forEach(function(b, i) {
         b.classList.toggle('on', i === st);
