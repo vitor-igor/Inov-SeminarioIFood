@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>iFood: Plataforma e transformação do delivery</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Instrument+Sans:wght@400;600;700&display=swap">
+<style>
+/* Forçado Tema Claro para garantida visualização em Projetores */
+:root {
+  --bg: #F4F6F8;
+  --ink: #111827;
+  --mut: #4B5563;
+  --red: #EA1D2C;
+  --red-light: #FFF0F1;
+  --sun: #FFC83D;
+  --card: #FFFFFF;
+  --line: #D1D5DB;
+  box-sizing: border-box;
+}
+
+html, body { height: 100%; margin: 0; }
+body { 
+  background: var(--bg); 
+  color: var(--ink); 
+  font: 19px/1.6 'Instrument Sans', system-ui, sans-serif; 
+  display: flex; 
+  flex-direction: column; 
+}
+
+h1, h2, h3 { font-family: 'Bricolage Grotesque', system-ui, sans-serif; line-height: 1.15; margin: 0 0 .4em; }
+h1 { font-size: clamp(38px, 5vw, 64px); font-weight: 800; color: var(--ink); }
+h2 { font-size: clamp(28px, 3.8vw, 44px); font-weight: 800; color: var(--ink); }
+h3 { font-size: 22px; color: var(--red); font-weight: 700; margin-bottom: 8px; }
+
+header { padding: 16px 24px 12px; border-bottom: 2px solid var(--line); background: var(--card); }
+.trk-container { position: relative; max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+.trk { position: relative; display: flex; justify-content: space-between; width: 100%; }
+.trk:before { content: ""; position: absolute; left: 10px; right: 10px; top: 22px; border-top: 3px dashed var(--line); z-index: 1; }
+.trk button { all: unset; cursor: pointer; position: relative; z-index: 2; text-align: center; font-size: 14px; font-weight: 600; color: var(--mut); flex: 1; }
+.trk i { display: block; width: 18px; height: 18px; border-radius: 50%; background: var(--card); border: 4px solid var(--line); margin: 12px auto 6px; transition: 0.3s; }
+.trk button.on i, .trk button.dn i { background: var(--red); border-color: var(--red); }
+.trk button.on { color: var(--red); font-weight: 700; }
+#bike { position: absolute; top: -4px; left: 0; font-size: 28px; z-index: 3; transition: left .5s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(-50%); pointer-events: none; }
+
+main { flex: 1; position: relative; overflow: hidden; }
+.s { display: none; position: absolute; inset: 0; overflow-y: auto; padding: 40px 32px 80px; }
+.s.on { display: block; animation: fade .35s ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.w { max-width: 1150px; margin: 0 auto; }
+.k { color: var(--red); font-weight: 700; margin: 0 0 .4em; text-transform: uppercase; font-size: 15px; letter-spacing: 1px; }
+.lead { font-size: 1.25em; margin: 0 0 1.2em; color: var(--mut); font-weight: 400; }
+.src { font-size: 15px; color: var(--mut); margin-top: 1.5em; border-top: 1px solid var(--line); padding-top: 12px; font-style: italic; }
+
+/* Grids e Componentes de Layout */
+.g { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 24px; }
+.g-2row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+.g-2row .full { grid-column: 1 / -1; }
+
+.c { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+.c p { margin: .4em 0 0; font-size: 17px; color: #374151; }
+.c b { font-family: 'Bricolage Grotesque', sans-serif; font-size: 32px; color: var(--ink); display: block; line-height: 1.1; margin-bottom: 8px; }
+
+/* Timeline Visual */
+.timeline { display: flex; flex-direction: column; gap: 16px; margin: 24px 0; border-left: 4px solid var(--red); padding-left: 20px; }
+.timeline-item { background: var(--card); padding: 18px 24px; border-radius: 10px; border: 1px solid var(--line); }
+.timeline-item h4 { margin: 0 0 4px 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; color: var(--red); }
+.timeline-item p { margin: 0; font-size: 16.5px; color: #374151; }
+
+/* Tabelas Personalizadas */
+.custom-table { width: 100%; border-collapse: collapse; margin: 20px 0; background: var(--card); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+.custom-table th { background: var(--ink); color: #fff; text-align: left; padding: 14px 18px; font-family: 'Bricolage Grotesque', sans-serif; font-size: 18px; }
+.custom-table td { padding: 14px 18px; border-bottom: 1px solid var(--line); font-size: 16.5px; color: #374151; }
+.custom-table tr:last-child td { border-bottom: none; }
+.custom-table tr:nth-child(even) { background: #FAFAFA; }
+
+/* Highlight Card de Inovação na Simulação */
+.c.inov-card { background: var(--red-light); border: 2px solid var(--red); }
+.c.inov-card h3 { color: var(--red); font-size: 24px; }
+.c.inov-card p { font-size: 18px; font-weight: 600; color: #111827; }
+
+.btn { font: 600 17px 'Instrument Sans', sans-serif; border: 2px solid var(--ink); background: transparent; color: var(--ink); padding: 10px 22px; border-radius: 99px; cursor: pointer; transition: 0.2s; }
+.btn:hover { background: var(--line); }
+.btn.r { background: var(--red); border-color: var(--red); color: #fff; font-size: 20px; padding: 16px 36px; box-shadow: 0 4px 14px rgba(234, 29, 44, 0.35); }
+.btn.r:hover { background: #d01925; transform: translateY(-2px); }
+
+.chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.chips span { background: #E5E7EB; color: #1F2937; font-weight: 700; font-size: 14px; padding: 6px 14px; border-radius: 99px; border: 1px solid #D1D5DB; }
+
+.highlight-box { border-left: 6px solid var(--red); padding: 20px 24px; margin: 24px 0; background: var(--red-light); border-radius: 0 12px 12px 0; font-size: 19px; }
+
+/* Estilo para Referências ABNT */
+.abnt-list { list-style: none; padding: 0; margin: 20px 0; }
+.abnt-list li { margin-bottom: 16px; font-size: 16px; color: #374151; padding-left: 24px; text-indent: -24px; }
+
+footer { display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; border-top: 2px solid var(--line); font-size: 16px; font-weight: 600; color: var(--mut); background: var(--card); }
+
+@media(max-width: 800px) { .g-2row { grid-template-columns: 1fr; } .trk button { font-size: 11px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="trk-container">
+    <div class="trk" id="trk"><span id="bike">🛵</span></div>
+  </div>
+</header>
+
+<main id="m">
+
+<!-- Slide 0: Capa Mantida Exatamente conforme sua edição -->
+<section class="s" id="s0">
+  <div class="w" style="display: grid; grid-template-columns: minmax(280px, 1fr) 2fr; gap: 40px; align-items: center; min-height: 60vh;">
+    <div style="text-align: center;">
+        <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/IFood_logo.svg/3840px-IFood_logo.svg.png?utm_source=pt.wikipedia.org&utm_campaign=index&utm_content=thumbnail" style="max-width: 100%; width: 260px; height: auto; display: inline-block;" alt="Logo iFood">
+    </div>
+
+    <div>
+        <p class="k" style="margin-bottom: 8px;">Inovação e Criatividade</p>
+        <h1 style="margin-bottom: 16px;">iFood: Plataforma e transformação do delivery</h1>
+        <p class="lead" style="font-weight: 600; color: var(--ink); margin-bottom: 24px;">Uma análise da transformação tecnológica, do modelo de negócio e dos impactos do fenômeno da inovação no setor de alimentação.</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-top: 2px solid var(--line); padding-top: 20px;">
+            <div>
+                <h3 style="font-size: 18px; margin-bottom: 6px;">Integrantes do Grupo</h3>
+                <p style="font-size: 17px; font-weight: 600; margin: 0;">• Jairo Costa da Cunha Júnior</p>
+                <p style="font-size: 17px; font-weight: 600; margin: 4px 0 0 0;">• Vitor Igor Lessa da Costa</p>
+            </div>
+            <div>
+                <h3 style="font-size: 18px; margin-bottom: 6px;">Docente</h3>
+                <p style="font-size: 17px; font-weight: 600; margin: 0;">Dr. Francisco Petrônio Alencar de Medeiros</p>
+            </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 1: O Problema Original -->
+<section class="s" id="s1"><div class="w">
+  <p class="k">1. O Contexto de Origem</p>
+  <h2>O Problema e a Dor do Mercado Analógico</h2>
+  <p class="lead">Antes da digitalização, a relação entre consumidores, restaurantes e entregadores sofria de assimetria de informação e gargalos operacionais.</p>
+  
+  <div class="g">
+    <div class="c">
+      <h3>Dores do Consumidor</h3>
+      <p>Dependência de panfletos impressos desatualizados, linhas telefônicas ocupadas no horário de pico, impossibilidade de rastrear o pedido e falta de opções de pagamento digital.</p>
+    </div>
+    <div class="c">
+      <h3>Dores dos Restaurantes</h3>
+      <p>Processo manual de anotação sujeito a erros, alcance restrito ao bairro físico e altíssimo custo fixo para manter entregadores dedicados ociosos fora do horário de pico.</p>
+    </div>
+    <div class="c">
+      <h3>O Gatilho Tecnológico</h3>
+      <p>A expansão do 3G/4G, a massificação dos smartphones com GPS e a maturidade de APIs de geolocalização e pagamentos permitiram mover a central de atendimento para o bolso do usuário.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- Slide 2: Surgimento da Ideia & Linha do Tempo -->
+<section class="s" id="s2"><div class="w">
+  <p class="k">2. Origem e Evolução</p>
+  <h2>Surgimento da Ideia e Trajetória</h2>
+  <p class="lead">A transformação do iFood de um guia impresso regional para uma gigante de tecnologia.</p>
+  
+  <div class="timeline">
+    <div class="timeline-item">
+      <h4>2007 — As Origens (Disk Cook)</h4>
+      <p>Nascimento como um guia impresso de cardápios e central telefônica unificada para pedidos de restaurantes de alta gastronomia em São Paulo.</p>
+    </div>
+    <div class="timeline-item">
+      <h4>2011 — Fundação do iFood & Transição Web</h4>
+      <p>Fundação oficial da marca iFood por Eduardo Baer, Patrick Sigrist e sócios, unindo forças com o site Restaurante Web para criar o primeiro portal online de pedidos do Brasil.</p>
+    </div>
+    <div class="timeline-item">
+      <h4>2014 — Entrada da Movile & Fusões Estratégicas</h4>
+      <p>Acelerada pelo aporte do grupo de tecnologia Movile, a empresa realiza fusões com o Just Eat no Brasil e adquire concorrentes regionais para garantir escala nacional.</p>
+    </div>
+    <div class="timeline-item">
+      <h4>2018 até Hoje — Logística Própria, IA & Ecosystem Expansion</h4>
+      <p>Lançamento da infraestrutura de "Entrega iFood" (oferecendo logística para lojas sem entregadores), evolução para modelos de IA preditiva, expansão para supermercados, farmácias e soluções financeiras (iFood Pago).</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- Slide 3: Tipologia da Inovação & Plataforma Multilateral -->
+<section class="s" id="s3"><div class="w">
+  <p class="k">3. Categorização da Inovação</p>
+  <h2>A Plataforma Multilateral de Três Lados</h2>
+  <p class="lead">O iFood não inventou a entrega de comida. A inovação central foi a transição de um canal linear para uma <b>plataforma multilateral autossustentável</b>.</p>
+
+  <div style="background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px; margin-bottom: 24px; text-align: center;">
+    <svg viewBox="0 0 800 260" style="width: 100%; max-width: 750px; height: auto;">
+      <!-- Conexões -->
+      <line x1="150" y1="180" x2="400" y2="70" stroke="#EA1D2C" stroke-width="3" stroke-dasharray="6,6"/>
+      <line x1="650" y1="180" x2="400" y2="70" stroke="#EA1D2C" stroke-width="3" stroke-dasharray="6,6"/>
+      <line x1="150" y1="180" x2="650" y2="180" stroke="#EA1D2C" stroke-width="3" stroke-dasharray="6,6"/>
+      
+      <!-- Nó Central -->
+      <circle cx="400" cy="70" r="55" fill="#EA1D2C" />
+      <text x="400" y="65" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="18" text-anchor="middle">CORE iFOOD</text>
+      <text x="400" y="85" fill="#FFC83D" font-family="'Instrument Sans', sans-serif" font-weight="bold" font-size="13" text-anchor="middle">Algoritmos & IA</text>
+
+      <!-- Nó Clientes -->
+      <circle cx="150" cy="180" r="48" fill="#111827" />
+      <text x="150" y="175" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="16" text-anchor="middle">CLIENTES</text>
+      <text x="150" y="195" fill="#D1D5DB" font-family="'Instrument Sans', sans-serif" font-size="12" text-anchor="middle">Demanda & Consumo</text>
+
+      <!-- Nó Entregadores -->
+      <circle cx="400" cy="220" r="40" fill="#FFC83D" />
+      <text x="400" y="215" fill="#111827" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="14" text-anchor="middle">ENTREGADORES</text>
+      <text x="400" y="232" fill="#111827" font-family="'Instrument Sans', sans-serif" font-size="11" text-anchor="middle">Capacidade Logística</text>
+
+      <!-- Nó Restaurantes -->
+      <circle cx="650" cy="180" r="48" fill="#111827" />
+      <text x="650" y="175" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="16" text-anchor="middle">RESTAURANTES</text>
+      <text x="650" y="195" fill="#D1D5DB" font-family="'Instrument Sans', sans-serif" font-size="12" text-anchor="middle">Oferta & Produção</text>
+    </svg>
+  </div>
+
+  <div class="g">
+    <div class="c">
+      <h3>Inovação de Modelo de Negócio</h3>
+      <p>Conexão dinâmica entre três públicos interdependentes com forte efeito de rede (Network Effects).</p>
+    </div>
+    <div class="c">
+      <h3>Inovação de Serviço</h3>
+      <p>Logística plug-and-play que permitiu a digitalização instantânea de milhares de pequenos negócios sem frota própria.</p>
+    </div>
+    <div class="c">
+      <h3>Inovação de Processo</h3>
+      <p>Automatização completa do ciclo de vida do pedido: da recomendação algorítmica ao despacho em tempo real.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- Slide 4: Proposta de Valor e Estrutura Multi-Receita -->
+<section class="s" id="s4"><div class="w">
+  <p class="k">4. Monetização e Valor</p>
+  <h2>Proposta de Valor Trilateral e Modelo de Receita</h2>
+  <p class="lead">A sustentabilidade do ecossistema baseia-se na entrega de valor distinto aos três pilares e na diversificação de fontes de receita.</p>
+  
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Público-Alvo</th>
+        <th>Proposta de Valor Oferecida</th>
+        <th>Como o iFood Atende</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>Consumidores</b></td>
+        <td>Conveniência, variedade ilimitada e previsibilidade.</td>
+        <td>Busca personalizada por IA, rastreamento via GPS e checkout transparente.</td>
+      </tr>
+      <tr>
+        <td><b>Restaurantes</b></td>
+        <td>Aumento exponencial do volume de vendas e eliminação de custos fixos.</td>
+        <td>Acesso à base de milhões de usuários e serviço de logística sob demanda.</td>
+      </tr>
+      <tr>
+        <td><b>Entregadores</b></td>
+        <td>Flexibilidade de horários e geração de renda rápida.</td>
+        <td>Alocação otimizada de rotas pelo aplicativo e repasses financeiros frequentes.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top: 28px;">Estrutura Multi-Receita da Plataforma</h3>
+  <div class="g">
+    <div class="c">
+      <h3>1. Comissões sobre Vendas</h3>
+      <p>Taxa percentual cobrada sobre o valor dos pedidos (Plano Básico vs. Plano Entrega iFood).</p>
+    </div>
+    <div class="c">
+      <h3>2. Tarifa de Serviço & Frete</h3>
+      <p>Valores cobrados diretamente do consumidor final para manutenção do ecossistema e deslocamento.</p>
+    </div>
+    <div class="c">
+      <h3>3. iFood Ads & Fintech</h3>
+      <p>Publicidade paga por restaurantes para destaque na vitrine + serviços financeiros do iFood Pago (antecipação de recebíveis).</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- Slide 5: Transição para a Simulação do Pedido -->
+<section class="s" id="s5"><div class="w">
+  <p class="k">5. Laboratório Vivo</p>
+  <h2>A Jornada do Pedido como Demonstrativo de Inovação</h2>
+  <p class="lead">Para compreender a inovação do iFood sob a ótica da <b>Engenharia de Software</b>, não basta analisar a empresa de forma estática. Acompanharemos o ciclo de vida técnico de <b>um único pedido</b> em tempo real.</p>
+  
+  <div class="highlight-box">
+    <b>O que observaremos nos próximos 5 passos:</b>
+    <br>Como cada interação do usuário aciona instantaneamente decisões de modelo de negócio, chamadas de microsserviços de altíssima velocidade, inteligência artificial preditiva e roteamento logístico.
+  </div>
+
+  <div style="text-align: center; margin-top: 32px;">
+    <button class="btn r" onclick="go(6)">Iniciar Simulação Passo a Passo</button>
+  </div>
+</div></section>
+
+<div id="ST"></div> <!-- Os 5 slides de simulação (s6 a s10) injetados via JS -->
+
+<!-- Slide 11: Desenvolvimento e Validação -->
+<section class="s" id="s11"><div class="w">
+  <p class="k">6. Experimentação & Métricas</p>
+  <h2>Desenvolvimento, MVPs e Validação com Usuários</h2>
+  <p class="lead">A validação contínua e a cultura de hipóteses foram determinantes para o ajuste do produto ao mercado (Product-Market Fit).</p>
+  
+  <div class="g">
+    <div class="c">
+      <h3>Validação por MVPs Regionais</h3>
+      <p>No início, a validação ocorreu testando a adesão em bairros específicos de São Paulo com protótipos enxutos antes de expandir a infraestrutura nacionalmente.</p>
+    </div>
+    <div class="c">
+      <h3>Testes A/B em Produção</h3>
+      <p>Todas as alterações na interface ou nos algoritmos são validadas simultaneamente com grupos de usuários reais para medir o impacto exato na conversão sem suposições prévias.</p>
+    </div>
+    <div class="c">
+      <h3>Métricas de Sucesso Integradas</h3>
+      <p>Acompanhamento rigoroso de retenção (cohorts), tempo de entrega estimado vs. real (ETA), cancelamentos por atraso e índice NPS de clientes e parceiros.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- Slide 12: Tecnologia & Engenharia de Software -->
+<section class="s" id="s12"><div class="w">
+  <p class="k">7. Arquitetura Tecnológica</p>
+  <h2>Tecnologia e Engenharia de Software</h2>
+  <p class="lead">A infraestrutura técnica evoluiu de uma aplicação monolítica para uma arquitetura distribuída resiliente de altíssima escala.</p>
+  
+  <div class="g">
+    <div class="c">
+      <h3>Microsserviços em Rust</h3>
+      <p>Adoção da linguagem <b>Rust</b> nos motores críticos de roteamento logístico para garantir execução com latência sub-milissegundo e baixo consumo de memória.</p>
+    </div>
+    <div class="c">
+      <h3>Infraestrutura AWS em Nuvem</h3>
+      <p>Uso de nuvem elástica escalável capaz de suportar variações bruscas de tráfego entre os horários de vale e os picos de almoço e jantar.</p>
+    </div>
+    <div class="c">
+      <h3>Modelos Preditivos de IA</h3>
+      <p>Algoritmos de aprendizado de máquina atuando em tempo real no combate a fraudes de cartão, cálculo do tempo de preparo de pratos e agrupamento de entregas.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- Slide 13: Impactos Socioeconômicos completos -->
+<section class="s" id="s13"><div class="w">
+  <p class="k">8. Impactos Abrangentes</p>
+  <h2>Transformação Socioeconômica e do Mercado</h2>
+  <p class="lead">Uma análise detalhada das mudanças provocadas nos usuários, na concorrência e na economia do país.</p>
+  
+  <div class="g">
+    <div class="c">
+      <b>R$ 167 Bilhões</b>
+      <p>Impacto movimentado na economia nacional em 2025 (~0,7% do PIB do Brasil), gerando mais de 1,18 milhão de postos de trabalho diretos e indiretos.</p>
+    </div>
+    <div class="c">
+      <b>Mudança nos Usuários</b>
+      <p>Transformação cultural da refeição rápida fora do restaurante em um hábito diário e doméstico, redefinindo o comportamento de consumo urbano.</p>
+    </div>
+  </div>
+
+  <div class="g">
+    <div class="c">
+      <h3>Surgimento das Dark Kitchens</h3>
+      <p>Criação de um novo modelo de negócio imobiliário e gastronômico: restaurantes focados 100% no atendimento a entregas, sem salão de atendimento.</p>
+    </div>
+    <div class="c">
+      <h3>Reação da Concorrência</h3>
+      <p>O sucesso acelerou a consolidação do setor no Brasil, levando à entrada e posterior saída de gigantes globais como o Uber Eats, além da reação de concorrentes como Rappi e Delivery Much.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- Slide 14: Propriedade Intelectual & Inovação Aberta -->
+<section class="s" id="s14"><div class="w">
+  <p class="k">9. Ecossistema & Propriedade</p>
+  <h2>Propriedade Intelectual e Inovação Aberta</h2>
+  <p class="lead">Como a empresa utiliza a estratégia de ecossistemas e parcerias externas para acelerar seu desenvolvimento tecnológico.</p>
+  
+  <div class="g">
+    <div class="c">
+      <h3>Modelo de Inovação Aberta (Open Innovation)</h3>
+      <p>Desenvolvimento do <strong>iFood Labs</strong> e parcerias contínuas com ecossistemas de startups, aceleradoras e centros universitários de pesquisa (USP, FGV, Insper) para testar novas soluções em robótica, drones e logística verde.</p>
+    </div>
+    <div class="c">
+      <h3>Estratégia de M&A (Aquisições)</h3>
+      <p>Aceleração da capacidade interna por meio da compra estratégica de startups de tecnologia e logística (como SpoonRocket e H2O), integrando rapidamente seus talentos e código ao ecossistema.</p>
+    </div>
+    <div class="c">
+      <h3>APIs Abertas & Propriedade Intelectual</h3>
+      <p>Proteção rigorosa de marcas e algoritmos proprietários de recomendação, somada à disponibilização de APIs abertas para integração com softwares de gestão (PDV) dos restaurantes.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- Slide 15: Visão Crítica e Desafios Regulatórios -->
+<section class="s" id="s15"><div class="w">
+  <p class="k">10. Análise Crítica</p>
+  <h2>Pontos Frágeis, Trabalho e Regulação do CADE</h2>
+  <p class="lead">A consolidação do monopólio de fato trouxe externalidades sociais e desafios regulatórios profundos.</p>
+  
+  <div class="g">
+    <div class="c">
+      <h3>Precarização e "Uberização"</h3>
+      <p>A transferência do risco operacional para os entregadores autônomos gerou fortes debates éticos e jurídicos sobre a falta de seguridade social, jornadas exaustivas e remuneração da categoria.</p>
+    </div>
+    <div class="c">
+      <h3>Intervenção Antitruste do CADE</h3>
+      <p>Em 2023, o CADE interveio proibindo os acordos de exclusividade celebrados pelo iFood com grandes redes de restaurantes, visando reabrir o mercado para a concorrência.</p>
+    </div>
+    <div class="c">
+      <h3>Dependência dos Pequenos Negócios</h3>
+      <p>Altas comissões cobradas (que podem chegar a 27%) pressionam as margens dos pequenos restaurantes, que se tornam reféns da visibilidade concedida pelos algoritmos da plataforma.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- Slide 16: Aprendizados de Engenharia de Software -->
+<section class="s" id="s16"><div class="w">
+  <p class="k">11. Lições Práticas</p>
+  <h2>Aprendizados para Engenharia de Software</h2>
+  <div class="g">
+    <div class="c">
+      <h3>Core Business Não se Terceiriza</h3>
+      <p>O iFood enfrentou severas limitações no início ao terceirizar sua equipe de desenvolvimento. Assumir o controle interno da engenharia foi o divisor de águas para permitir a escala do produto.</p>
+    </div>
+    <div class="c">
+      <h3>Decisões Guiadas pelo Negócio</h3>
+      <p>Ferramentas avançadas (como a linguagem Rust ou modelos preditivos) só devem ser adotadas quando resolvem gargalos operacionais e financeiros claros (latência e custo de servidores).</p>
+    </div>
+    <div class="c">
+      <h3>Arquitetura Evolutiva & Resiliência</h3>
+      <p>Sistemas de altíssimo tráfego exigem desacoplamento por microsserviços e tolerância a falhas para garantir disponibilidade contínua mesmo sob picos extremos inesperados.</p>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <b>Conclusão Acadêmica:</b> O caso iFood demonstra que a inovação em Engenharia de Software vai além de algoritmos isolados — trata-se de construir uma arquitetura sociotécnica escalável capaz de sustentar um ecossistema econômico em tempo real.
+  </div>
+</div></section>
+
+<!-- Slide 17: Referências Bibliográficas em Padrão ABNT -->
+<section class="s" id="s17"><div class="w">
+  <p class="k">12. Fontes e Bibliografia</p>
+  <h2>Referências Bibliográficas</h2>
+  
+  <ul class="abnt-list">
+    <li>CADE — CONSELHO ADMINISTRATIVO DE DEFESA ECONÔMICA. <b>Termo de Compromisso de Desempenho: Processo Administrativo nº 08700.004588/2020-47 (iFood/Concorrência)</b>. Brasília: CADE, 2023.</li>
+    <li>FIPE — FUNDAÇÃO INSTITUTO DE PESQUISAS ECONÔMICAS. <b>Pesquisa de Impacto Socioeconômico do Ecossistema iFood no Brasil</b>. São Paulo: FIPE, 2024.</li>
+    <li>IFOOD TECH. <b>A jornada da linguagem Rust na otimização da logística de entregas do iFood</b>. Medium / iFood Tech Engineering Blog, 2024. Disponível em: &lt;https://tech.ifood.com.br/&gt;. Acesso em: 2026.</li>
+    <li>IFOOD TECH. <b>Como o iFood processa bilhões de predições de inteligência artificial por dia</b>. Medium / iFood Tech Engineering Blog, 2023.</li>
+    <li>OSTERWALDER, Alexander; PIGNEUR, Yves. <b>Business Model Generation: inovação em modelos de negócios</b>. Rio de Janeiro: Alta Books, 2011.</li>
+    <li>PARKER, Geoffrey G.; VAN ALSTYNE, Marshall W.; CHOUDARY, Sangeet Paul. <b>Platform Revolution: How Networked Markets Are Transforming the Economy and How to Make Them Work for You</b>. New York: W. W. Norton & Company, 2016.</li>
+  </ul>
+</div></section>
+
+</main>
+
+<footer>
+    <button class="btn" id="pv">Anterior</button>
+    <span id="ct"></span>
+    <button class="btn" id="nx">Próximo</button>
+</footer>
+
+<script>
+// Dados da Jornada do Pedido para os Slides de Simulação (Slides 6 a 10)
+var ST = [
+  ["1. Descoberta & Vitrine Personalizada", 
+   "O usuário abre o aplicativo no celular para escolher sua refeição.", 
+   "Interface dinâmica com restaurantes filtrados por localização, categorias e promoções personalizadas.", 
+   "Mais de 10 bilhões de predições de IA pré-calculadas combinadas a algoritmos de recomendação em tempo real e testes A/B instantâneos.", 
+   "Inovação de Experiência e Processo: A vitrine é totalmente dinâmica e individualizada. O app reorganiza as opções para maximizar a conversão com base nos hábitos do cliente.", 
+   ["Teste A/B em Produção", "IA Preditiva", "Algoritmos de Recomendação"], "Capeleiro, iFood Tech (2020)"],
+  
+  ["2. Fechando a Sacola & Pagamento Antifraude", 
+   "Confirmação dos itens, seleção do cupom e autorização do pagamento.", 
+   "Checkout simplificado integrando cupons, taxa de entrega, gorjeta ao motoboy e opção iFood Pay.", 
+   "Motores de IA antifraude avaliam centenas de variáveis por transação em poucos milissegundos para barrar cartões clonados e chargebacks.", 
+   "Inovação de Plataforma e Fintech: A integração de serviços financeiros (iFood Pago) viabilizou liquidez imediata para parceiros e reduziu atrito transacional.", 
+   ["Motor Antifraude AWS", "Fintech Integrada", "Redução de Atrito"], "iFood Tech Antifraude (2024)"],
+  
+  ["3. Aceite & SLA do Restaurante", 
+   "O restaurante recebe a comanda na sua tela de gestão e confirma o preparo.", 
+   "Notificação na tela do cliente confirmando que o prato entrou na esteira de produção.", 
+   "Integração via Webhook com o PDV do restaurante e gestão estrita de SLA (cancelamento automático em caso de falta de resposta).", 
+   "Inovação Operacional e Governança: Regulação algorítmica de parceiros para garantir previsibilidade e nível de serviço padronizado em milhares de estabelecimentos.", 
+   ["Regulação por Algoritmo", "Gestão de SLA", "Webhooks Integrados"], "Capeleiro (2020)"],
+  
+  ["4. Despacho Preditivo & Logística em Rust", 
+   "Alocação do entregador ideal e rastreamento do deslocamento no mapa.", 
+   "Mapa com sinal do GPS atualizado em tempo real mostrando a rota do entregador até a entrega.", 
+   "Otimizadores logísticos de altíssima velocidade rodando microsserviços em Rust, prevendo o tempo exato em que a comida ficará pronta para minimizar o tempo de espera do motoboy.", 
+   "Inovação Tecnológica e Logística: Roteamento preditivo em grafos de baixa latência, desonerando o restaurante da gestão da frota.", 
+   ["Microsserviços em Rust", "Roteamento em Grafos", "Logística Plug-and-Play"], "A Jornada de Rust no iFood (2024)"],
+  
+  ["5. Entrega & Efeito de Rede", 
+   "Chegada do pedido ao endereço do cliente e avaliação do serviço.", 
+   "Entrega realizada via validação de código PIN de segurança e avaliação por estrelas no aplicativo.", 
+   "Processamento do feedback do usuário para alimentar os algoritmos de reputação e repasse financeiro automático entre os lados da plataforma.", 
+   "Inovação de Modelo de Negócio: O encerramento do ciclo realimenta o efeito de rede (Network Effect), retendo clientes e gerando dados estratégicos para todo o ecossistema.", 
+   ["Validação PIN", "Feedback Loop", "Efeito de Rede Multi-Lado"], "Relatório de Sustentabilidade 2023/25"]
+];
+
+// Injeção Dinâmica dos Slides de Simulação no layout de 2 Linhas
+document.getElementById('ST').outerHTML = ST.map(function(a, i) {
+    return '<section class="s" id="s' + (i+6) + '"><div class="w">' +
+           '<p class="k">Jornada do Pedido — Passo ' + (i+1) + ' de 5</p>' +
+           '<h2>' + a[0] + '</h2>' +
+           '<p class="lead">' + a[1] + '</p>' +
+           '<div class="g-2row">' +
+               '<div class="c"><h3>O que você vê:</h3><p>' + a[2] + '</p></div>' +
+               '<div class="c"><h3>O que roda por trás:</h3><p>' + a[3] + '</p></div>' +
+               '<div class="c full inov-card"><h3>O que é inovação aqui?</h3><p>' + a[4] + '</p></div>' +
+           '</div>' +
+           '<div class="chips">' + a[5].map(function(c){return '<span>' + c + '</span>'}).join('') + '</div>' +
+           '<p class="src">Referência Técnica: ' + a[6] + '</p>' +
+           '</div></section>';
+}).join('');
+
+var S = [].slice.call(document.querySelectorAll('.s')),
+    T = document.getElementById('trk'),
+    B = document.getElementById('bike'),
+    cur = 0;
+
+// Construção dos botões do Tracker no topo
+ST.forEach(function(a, i) {
+    var b = document.createElement('button');
+    b.innerHTML = '<i></i>Passo ' + (i+1);
+    b.onclick = function() { go(i+6); };
+    T.appendChild(b);
+});
+var tb = [].slice.call(T.querySelectorAll('button'));
+
+// Posicionamento preciso da motoca sobre o passo ativo
+function updateBikePosition(stepIndex) {
+    if(stepIndex >= 0 && stepIndex < tb.length) {
+        var btn = tb[stepIndex];
+        var trackerRect = T.getBoundingClientRect();
+        var btnRect = btn.getBoundingClientRect();
+        var centerPos = (btnRect.left + btnRect.width / 2) - trackerRect.left;
+        B.style.left = centerPos + 'px';
+        B.style.opacity = '1';
+    } else {
+        if(cur < 6) {
+            var btn0 = tb[0];
+            var trackerRect0 = T.getBoundingClientRect();
+            var btnRect0 = btn0.getBoundingClientRect();
+            B.style.left = ((btnRect0.left + btnRect0.width / 2) - trackerRect0.left) + 'px';
+        } else {
+            var btnLast = tb[tb.length - 1];
+            var trackerRectL = T.getBoundingClientRect();
+            var btnRectL = btnLast.getBoundingClientRect();
+            B.style.left = ((btnRectL.left + btnRectL.width / 2) - trackerRectL.left) + 'px';
+        }
+    }
+}
+
+function show(n) {
+    cur = Math.max(0, Math.min(S.length - 1, n));
+    S.forEach(function(s, i) {
+        s.classList.toggle('on', i === cur);
+    });
+    S[cur].scrollTop = 0;
+    
+    // Os passos de simulação ficam nos slides com índices 6 a 10
+    var st = (cur >= 6 && cur <= 10) ? cur - 6 : -1;
+    tb.forEach(function(b, i) {
+        b.classList.toggle('on', i === st);
+        b.classList.toggle('dn', st >= 0 ? i < st : cur > 10);
+    });
+    
+    updateBikePosition(st);
+    document.getElementById('ct').textContent = (cur + 1) + ' / ' + S.length;
+}
+
+function go(n) {
+    try { location.hash = 's' + n; } catch(e) {}
+    show(n);
+}
+
+window.addEventListener('hashchange', function() {
+    var m = /^#s(\d+)$/.exec(location.hash);
+    if(m) show(+m[1]);
+});
+
+document.getElementById('pv').onclick = function() { go(cur - 1); };
+document.getElementById('nx').onclick = function() { go(cur + 1); };
+
+document.addEventListener('keydown', function(e) {
+    if(e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(cur + 1); }
+    if(e.key === 'ArrowLeft') go(cur - 1);
+});
+
+var m = /^#s(\d+)$/.exec(location.hash);
+show(m ? +m[1] : 0);
+window.addEventListener('resize', function() { show(cur); });
+</script>
+</body>
+</html>
