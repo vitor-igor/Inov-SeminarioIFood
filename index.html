@@ -91,6 +91,52 @@ main { flex: 1; position: relative; overflow: hidden; }
 footer { display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; border-top: 2px solid var(--line); font-size: 16px; font-weight: 600; color: var(--mut); background: var(--card); }
 
 @media(max-width: 900px) { .g-2row { grid-template-columns: 1fr; } .trk button { font-size: 11px; } .timeline-item p { white-space: normal; } }
+
+.thanks-title {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: clamp(64px, 11vw, 120px);
+  font-weight: 800;
+  color: var(--red);
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin: 10px 0;
+}
+.thanks-title span {
+  display: inline-block;
+  animation: danceLetter 2s ease-in-out infinite;
+  text-shadow: 0 8px 24px rgba(234, 29, 44, 0.25);
+}
+@keyframes danceLetter {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-18px) rotate(-6deg); }
+  75% { transform: translateY(6px) rotate(4deg); }
+}
+
+.thanks-icons {
+  display: flex;
+  gap: 24px;
+  font-size: 46px;
+  margin-bottom: 12px;
+}
+.ico-float {
+  display: inline-block;
+  animation: floatIcon 2.5s ease-in-out infinite alternate;
+}
+@keyframes floatIcon {
+  from { transform: translateY(0px) scale(1); }
+  to { transform: translateY(-20px) scale(1.15); }
+}
+
+.badge-red {
+  background: var(--red);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 8px 22px;
+  border-radius: 99px;
+  box-shadow: 0 4px 14px rgba(234, 29, 44, 0.3);
+}
 </style>
 </head>
 <body>
@@ -192,26 +238,32 @@ footer { display: flex; justify-content: space-between; align-items: center; pad
   <p class="lead">O iFood não inventou a entrega de comida. A inovação central foi a transição de um canal linear para uma <b>plataforma multilateral autossustentável</b>.</p>
 
   <div style="background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 24px; margin-bottom: 24px; text-align: center;">
-    <svg viewBox="0 0 900 345" style="width: 100%; max-width: 850px; height: auto;">
-      <line x1="180" y1="230" x2="450" y2="80" stroke="#EA1D2C" stroke-width="4" stroke-dasharray="6,6"/>
-      <line x1="720" y1="230" x2="450" y2="80" stroke="#EA1D2C" stroke-width="4" stroke-dasharray="6,6"/>
-      <line x1="180" y1="230" x2="720" y2="230" stroke="#EA1D2C" stroke-width="4" stroke-dasharray="6,6"/>
+    <svg viewBox="0 0 900 350" style="width: 100%; max-width: 850px; height: auto;">
+      <!-- Conexões em Tracejado -->
+      <line x1="180" y1="250" x2="450" y2="85" stroke="#EA1D2C" stroke-width="4" stroke-dasharray="6,6"/>
+      <line x1="720" y1="250" x2="450" y2="85" stroke="#EA1D2C" stroke-width="4" stroke-dasharray="6,6"/>
+      <line x1="450" y1="250" x2="450" y2="85" stroke="#EA1D2C" stroke-width="4" stroke-dasharray="6,6"/>
+      <line x1="180" y1="250" x2="720" y2="250" stroke="#EA1D2C" stroke-width="4" stroke-dasharray="6,6"/>
       
-      <circle cx="450" cy="80" r="78" fill="#EA1D2C" />
-      <text x="450" y="72" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="20" text-anchor="middle">CORE iFOOD</text>
-      <text x="450" y="96" fill="#FFC83D" font-family="'Instrument Sans', sans-serif" font-weight="bold" font-size="14" text-anchor="middle">Algoritmos &amp; IA</text>
+      <!-- Nó Central: Core iFood -->
+      <circle cx="450" cy="85" r="70" fill="#EA1D2C" />
+      <text x="450" y="78" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="18" text-anchor="middle">CORE iFOOD</text>
+      <text x="450" y="98" fill="#FFC83D" font-family="'Instrument Sans', sans-serif" font-weight="bold" font-size="13" text-anchor="middle">Algoritmos &amp; IA</text>
 
-      <circle cx="180" cy="230" r="75" fill="#111827" />
-      <text x="180" y="222" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="18" text-anchor="middle">CLIENTES</text>
-      <text x="180" y="244" fill="#FFC83D" font-family="'Instrument Sans', sans-serif" font-weight="600" font-size="13" text-anchor="middle">Demanda &amp; Consumo</text>
+      <!-- Nó Esquerdo: Clientes -->
+      <circle cx="180" cy="250" r="70" fill="#111827" />
+      <text x="180" y="243" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="17" text-anchor="middle">CLIENTES</text>
+      <text x="180" y="263" fill="#FFC83D" font-family="'Instrument Sans', sans-serif" font-weight="600" font-size="12" text-anchor="middle">Demanda &amp; Consumo</text>
 
-      <circle cx="450" cy="275" r="68" fill="#FFC83D" />
-      <text x="450" y="268" fill="#111827" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="16" text-anchor="middle">ENTREGADORES</text>
-      <text x="450" y="288" fill="#111827" font-family="'Instrument Sans', sans-serif" font-weight="600" font-size="12" text-anchor="middle">Capacidade Logística</text>
+      <!-- Nó Central-Inferior: Entregadores -->
+      <circle cx="450" cy="250" r="70" fill="#FFC83D" />
+      <text x="450" y="243" fill="#111827" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="15" text-anchor="middle">ENTREGADORES</text>
+      <text x="450" y="263" fill="#111827" font-family="'Instrument Sans', sans-serif" font-weight="600" font-size="12" text-anchor="middle">Capacidade Logística</text>
 
-      <circle cx="720" cy="230" r="75" fill="#111827" />
-      <text x="720" y="222" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="18" text-anchor="middle">RESTAURANTES</text>
-      <text x="720" y="244" fill="#FFC83D" font-family="'Instrument Sans', sans-serif" font-weight="600" font-size="13" text-anchor="middle">Oferta &amp; Produção</text>
+      <!-- Nó Direito: Restaurantes -->
+      <circle cx="720" cy="250" r="70" fill="#111827" />
+      <text x="720" y="243" fill="#FFFFFF" font-family="'Bricolage Grotesque', sans-serif" font-weight="bold" font-size="16" text-anchor="middle">RESTAURANTES</text>
+      <text x="720" y="263" fill="#FFC83D" font-family="'Instrument Sans', sans-serif" font-weight="600" font-size="12" text-anchor="middle">Oferta &amp; Produção</text>
     </svg>
   </div>
 
@@ -528,6 +580,38 @@ footer { display: flex; justify-content: space-between; align-items: center; pad
     <li>OSTERWALDER, Alexander; PIGNEUR, Yves. <b>Business Model Generation: inovação em modelos de negócios</b>. Rio de Janeiro: Alta Books, 2011.</li>
     <li>PARKER, Geoffrey G.; VAN ALSTYNE, Marshall W.; CHOUDARY, Sangeet Paul. <b>Platform Revolution: How Networked Markets Are Transforming the Economy and How to Make Them Work for You</b>. New York: W. W. Norton & Company, 2016.</li>
   </ul>
+</div></section>
+
+<!-- Slide 18: Agradecimento (Cole este trecho logo antes de </main>) -->
+<section class="s" id="s18">
+  <div class="w" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 65vh; text-align: center;">
+    <div class="thanks-icons">
+      <span class="ico-float" style="animation-delay: 0s;">🛵</span>
+      <span class="ico-float" style="animation-delay: 0.3s;">🍕</span>
+      <span class="ico-float" style="animation-delay: 0.6s;">🍔</span>
+      <span class="ico-float" style="animation-delay: 0.9s;">🍟</span>
+    </div>
+
+    <h1 class="thanks-title">
+      <span style="animation-delay: 0.0s">O</span>
+      <span style="animation-delay: 0.1s">B</span>
+      <span style="animation-delay: 0.2s">R</span>
+      <span style="animation-delay: 0.3s">I</span>
+      <span style="animation-delay: 0.4s">G</span>
+      <span style="animation-delay: 0.5s">A</span>
+      <span style="animation-delay: 0.6s">D</span>
+      <span style="animation-delay: 0.7s">O</span>
+      <span style="animation-delay: 0.8s">!</span>
+    </h1>
+
+    <p style="color: var(--red); font-weight: 700; font-size: 1.4em; margin: 10px 0 24px;">
+      iFood: Plataforma e Transformação do Delivery
+    </p>
+
+    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+      <span class="badge-red">Inovação e Criatividade</span>
+    </div>
+
 </div></section>
 
 </main>
